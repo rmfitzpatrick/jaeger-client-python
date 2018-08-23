@@ -93,6 +93,10 @@ class LocalAgentReader(object):
     def request_throttling_credits(self, *args, **kwargs):
         return self.throttling_http.request_throttling_credits(*args, **kwargs)
 
+    def readFrame(self):
+        """Empty read frame that is never ready"""
+        return Future()
+
 
 class LocalAgentSender(LocalAgentReader, TBufferedTransport):
     """
@@ -111,7 +115,3 @@ class LocalAgentSender(LocalAgentReader, TBufferedTransport):
         # We are buffering things up because we are a TBufferedTransport.
         udp = TUDPTransport(host, reporting_port)
         TBufferedTransport.__init__(self, udp)
-
-    def readFrame(self):
-        """Empty read frame that is never ready"""
-        return Future()
